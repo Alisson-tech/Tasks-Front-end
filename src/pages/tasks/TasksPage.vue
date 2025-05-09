@@ -3,11 +3,11 @@
         <v-row>
           <v-col align="center">
             <h1 class="mb-7 mx-2"><v-icon color="#FF8C00" class="mx-1">mdi-text-box-edit-outline</v-icon> Lista de Tarefas</h1>
-            <v-btn class="mb-14" color="success font-weight-bold"><v-icon class="mr-1">mdi-plus</v-icon>Adicionar</v-btn>
+            <v-btn class="mb-14" color="success font-weight-bold" @click="CreateEditDialogState.openDialog"><v-icon class="mr-1">mdi-plus</v-icon>Adicionar</v-btn>
               <v-data-table
                 class="rounded-lg"
                 :headers="headers"
-                :items="tasks"
+                :items="TaskManager.tasks.value"
                 :items-per-page="5"
                 no-data-text="Cadastre uma Tarefa"
               >
@@ -21,27 +21,36 @@
                 
                 <template v-slot:item.actions="{ item }">
                   
-                  <v-icon color="error"  @click="openDeleteDialog(item.title)" class="ma-2">mdi-delete</v-icon>
+                  <v-icon color="error"  @click="deleteDialogState.openDialog(item.title)" class="ma-2">mdi-delete</v-icon>
   
-                  <v-icon color="primary"  class="ma-2">mdi-pencil</v-icon>
+                  <v-icon color="primary"  class="ma-2" @click="onEditItem(item)">mdi-pencil</v-icon>
                 </template>
                 
               </v-data-table>
           </v-col>
         </v-row>
 
-        <delete-dialog v-model="dialogDelete" :item-name="itemName || ''" @update:model-value="closeDeleteDialog" @delete="onDelete"></delete-dialog>
+        <delete-dialog v-model="deleteDialogState.dialog.value" :item-name="deleteDialogState.itemName.value || ''" @update:model-value="deleteDialogState.closeDialog" @delete="onDelete"></delete-dialog>
+        <create-edit-dialog v-model="CreateEditDialogState.dialog.value" :task="CreateEditDialogState.editedItem.value"  @update:model-value="CreateEditDialogState.closeDialog" @create="CreateEditDialogState.closeDialog" @edit="CreateEditDialogState.closeDialog"></create-edit-dialog>
       </v-container>
 </template>
 
 <script setup lang="ts">
-import { Header } from '../../types/Headers';
-import { Task } from '../../types/Task';
-
 import deleteDialog from '../../components/delete-dialog.vue';
-import { useDeleteDialog } from '../../composables/useDeleteDialog';
+import createEditDialog from './components/create-edit-dialog.vue';
 
-const { dialogDelete, itemName, openDeleteDialog, closeDeleteDialog} = useDeleteDialog();
+import { useDeleteDialog } from '../../composables/useDeleteDialog';
+import { useCreateEditDialog } from '../../composables/useCreateEditDialog';
+import { useTasks } from '../../composables/useTasks';
+
+import { Header } from '../../types/Headers';
+import { Task, TaskPayload } from '../../types/Task';
+
+
+
+const deleteDialogState = useDeleteDialog();
+const CreateEditDialogState = useCreateEditDialog<TaskPayload>();
+const TaskManager = useTasks();
 
 const headers: Header[] = [
   { title: 'Feito', value: 'done', sortable: false, align:'center', width: 10, headerProps: { class: 'font-weight-bold' }},
@@ -50,12 +59,12 @@ const headers: Header[] = [
   { title: 'Ações', value: 'actions', sortable: false, align:'center', width: 10, headerProps: { class: 'font-weight-bold' } },
 ]
 
-const tasks : Task[] = [
-  {done: true, title: 'aoba', description:'teste'},
-  {done: false, title: 'teste', description:'teste'}
-]
-
 function onDelete(){
   console.log("deletado");
+}
+
+function onEditItem(item: Task){
+  const editedTaks = TaskManager.taskToPayload(item)
+  CreateEditDialogState.openDialog(editedTaks)
 }
 </script>

@@ -1,21 +1,21 @@
 import { ref } from 'vue'
 
 export function useCreateEditDialog<T = any>() {
-  const dialogCreateEdit = ref(false)
+  const dialog = ref(false)
   const editedItem = ref<T | null>(null)
 
   const openDialog = (item?: T) => {
-    dialogCreateEdit.value = true
+    dialog.value = true
     editedItem.value = item ?? null
   }
 
   const closeDialog = () => {
-    dialogCreateEdit.value = false
+    dialog.value = false
     editedItem.value = null
   }
 
   return {
-    dialogCreateEdit,
+    dialog,
     editedItem,
     openDialog,
     closeDialog

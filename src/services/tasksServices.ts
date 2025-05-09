@@ -1,4 +1,4 @@
-import axios from '@/plugins/axios'
+import axios from 'axios'
 import type { Task } from '../types/Task'
 
 const BASE_URL = '/api/tasks'
