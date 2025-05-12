@@ -1,12 +1,13 @@
-import axios from 'axios'
-import type { Task } from '../types/Task'
+import api from '../plugins/api'
+import type { PaginationParams, PaginationResult } from '../types/pagination'
+import type { Task, TaskPayload } from '../types/task'
 
-const BASE_URL = '/api/tasks'
+const BASE_SERVICE_URL = '/api/task'
 
 export const taskService = {
-  async getAll() {
+  async getAll(params : PaginationParams) {
     try {
-      const response = await axios.get<Task[]>(BASE_URL)
+      const response = await api.get<PaginationResult<Task>>(BASE_SERVICE_URL, {params: params })
       return response.data
     } catch (error) {
       throw new Error('Não foi possível carregar as tarefas.')
@@ -15,25 +16,25 @@ export const taskService = {
 
   async getById(id: number) {
     try {
-      const response = await axios.get<Task>(`${BASE_URL}/${id}`)
+      const response = await api.get<Task>(`${BASE_SERVICE_URL}/${id}`)
       return response.data
     } catch (error) {
       throw new Error('Task não encontrada.')
     }
   },
 
-  async create(task: Partial<Task>) {
+  async create(task: Partial<TaskPayload>) {
     try {
-      const response = await axios.post<Task>(BASE_URL, task)
+      const response = await api.post<Task>(BASE_SERVICE_URL, task)
       return response.data
     } catch (error) {
       throw new Error('Não foi possível criar a tarefa.')
     }
   },
 
-  async update(id: number, task: Partial<Task>) {
+  async update(id: number, task: Partial<TaskPayload>) {
     try {
-      const response = await axios.put<Task>(`${BASE_URL}/${id}`, task)
+      const response = await api.put<Task>(`${BASE_SERVICE_URL}/${id}`, task)
       return response.data
     } catch (error) {
       throw new Error('Não foi possível atualizar a tarefa.')
@@ -42,7 +43,7 @@ export const taskService = {
 
   async delete(id: number) {
     try {
-      const response = await axios.delete(`${BASE_URL}/${id}`)
+      const response = await api.delete(`${BASE_SERVICE_URL}/${id}`)
       return response.status === 204
     } catch (error) {
       throw new Error('Não foi possível deletar a tarefa.')

@@ -6,7 +6,7 @@
         </v-card-title>
         <v-card-text>
           Tem certeza que deseja excluir
-          <strong>{{ itemName }}</strong>?
+          <strong>{{ item?.name }}</strong>?
         </v-card-text>
         <v-card-actions class="justify-end">
           <v-btn text @click="close">Cancelar</v-btn>
@@ -16,17 +16,18 @@
     </v-dialog>
   </template>
   
-  <script setup lang="ts">
+<script setup lang="ts">
   import { computed } from 'vue'
+  import { ItemDelete } from '../types/itemDelete';
   
   const props = defineProps<{
     modelValue: boolean
-    itemName: string
+    item: ItemDelete | null
   }>()
   
   const emit = defineEmits<{
     (e: 'update:modelValue', value: boolean): void,
-    (e: 'delete'): void;
+    (e: 'delete', value: number): void;
   }>()
   
   const model = computed({
@@ -39,8 +40,10 @@
   }
 
   function save(): void{
-    emit('delete')
-    close();
+    if(props.item != null)
+      emit('delete', props.item.id)
+    
+      close();
   }
   
   </script>

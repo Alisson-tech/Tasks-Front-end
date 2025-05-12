@@ -1,30 +1,26 @@
 import { ref, onMounted } from 'vue'
-import { taskService } from '../services/TasksServices'
-import type { Task, TaskPayload } from '../types/Task'
+import { taskService } from '../services/tasksServices'
+import type { Task, TaskPayload } from '../types/task'
+import type { PaginationParams, PaginationResult } from '../types/pagination'
 
 export function useTasks() {
   const tasks = ref<Task[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
-  const fetchTasks = async () => {
-    tasks.value = [
-      {id: 1, done: true, title: 'aoba', description:'teste'},
-      {id: 2, done: false, title: 'teste', description:'teste'}
-    ]
-
-    // isLoading.value = true
-    // error.value = null
-    // try {
-    //   tasks.value = await taskService.getAll()
-    // } catch (err) {
-    //   error.value = (err as Error).message
-    // } finally {
-    //   isLoading.value = false
-    // }
+  const fetchTasks = async (params: PaginationParams) => {
+      try {
+      const response = await taskService.getAll(params);
+      return response
+    } catch (err) {
+      return {
+        data: [],
+        total: 0
+      }
+    }
   }
 
-  const createTask = async (taskData: Partial<Task>) => {
+  const createTask = async (taskData: Partial<TaskPayload>) => {
     try {
       await taskService.create(taskData)
 
@@ -33,7 +29,7 @@ export function useTasks() {
     }
   }
 
-  const updateTask = async (id: number, taskData: Partial<Task>) => {
+  const updateTask = async (id: number, taskData: Partial<TaskPayload>) => {
     try {
       await taskService.update(id, taskData)
     } catch (err) {
@@ -50,13 +46,13 @@ export function useTasks() {
     }
   }
 
- function taskToPayload(task: Task): TaskPayload {
+ function createTaskToPayload(task: Task): TaskPayload {
     return {
       id: task.id,
       title: task.title,
       description: task.description,
     }
-  } 
+  }
 
   onMounted(fetchTasks)
 
@@ -68,6 +64,6 @@ export function useTasks() {
     createTask,
     updateTask,
     deleteTask,
-    taskToPayload
+    createTaskToPayload
   }
 }

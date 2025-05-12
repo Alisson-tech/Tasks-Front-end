@@ -1,22 +1,23 @@
 import { ref } from 'vue'
+import { ItemDelete } from '../types/itemDelete'
 
 export function useDeleteDialog() {
   const dialog = ref(false)
-  const itemName = ref<string | null>(null)
+  const itemDelete = ref<ItemDelete | null>(null)
 
-  const openDialog = (itemId: string) => {
+  const openDialog = (item: ItemDelete) => {
     dialog.value = true
-    itemName.value = itemId
+    itemDelete.value = item
   }
 
   const closeDialog = () => {
     dialog.value = false
-    itemName.value = null
+    itemDelete.value = null
   }
 
   return {
     dialog,
-    itemName,
+    itemDelete,
     openDialog,
     closeDialog
   }

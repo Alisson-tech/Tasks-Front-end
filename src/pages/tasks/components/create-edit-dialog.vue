@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue'
-  import { TaskPayload } from '../../../types/Task';
+  import { TaskPayload } from '../../../types/task';
   const rules = {
     required: (v: string) => !!v || 'Campo obrigatório',
   }
