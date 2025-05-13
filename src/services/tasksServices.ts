@@ -1,6 +1,6 @@
 import api from '../plugins/api'
 import type { PaginationParams, PaginationResult } from '../types/pagination'
-import type { Task, TaskPayload } from '../types/task'
+import type { Task, TaskPayload } from '../types/Task'
 
 const BASE_SERVICE_URL = '/api/task'
 

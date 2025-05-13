@@ -53,7 +53,7 @@ import { useTasks } from '../../composables/useTasks';
 import { usePagination } from '../../composables/usePagination';
 
 import { Header } from '../../types/Headers';
-import { Task, TaskPayload } from '../../types/task';
+import { Task, TaskPayload } from '../../types/Task';
 
 const deleteDialogState = useDeleteDialog();
 const createEditDialogState = useCreateEditDialog<TaskPayload>();

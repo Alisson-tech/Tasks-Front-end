@@ -2,7 +2,7 @@ import { ref, onMounted } from 'vue'
 import { taskService } from '../services/tasksServices'
 import { useSnackbar } from './useSnackBarFeedback'
 
-import type { Task, TaskPayload } from '../types/task'
+import type { Task, TaskPayload } from '../types/Task'
 import type { PaginationParams, PaginationResult } from '../types/pagination'
 
 export function useTasks() {
