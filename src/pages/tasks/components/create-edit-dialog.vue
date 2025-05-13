@@ -60,7 +60,6 @@
   })
   
   watch(model, (isOpen) => {
-    console.log(props.task)
     if (isOpen && props.task) {
       Object.assign(localTask.value, {
         id: props.task.id,
@@ -71,7 +70,6 @@
   })
 
   function close(): void {
-    console.log(localTask)
     model.value = false
   }
 
