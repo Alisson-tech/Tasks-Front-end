@@ -10,7 +10,7 @@ export const taskService = {
       const response = await api.get<PaginationResult<Task>>(BASE_SERVICE_URL, {params: params })
       return response.data
     } catch (error) {
-      throw new Error('Não foi possível carregar as tarefas.')
+      throw new Error(`Não foi possível carregar as tarefas: ${error}`)
     }
   },
 
@@ -19,7 +19,7 @@ export const taskService = {
       const response = await api.get<Task>(`${BASE_SERVICE_URL}/${id}`)
       return response.data
     } catch (error) {
-      throw new Error('Task não encontrada.')
+      throw new Error(`Tarefa não encontrada: ${error}`)
     }
   },
 
@@ -28,7 +28,7 @@ export const taskService = {
       const response = await api.post<Task>(BASE_SERVICE_URL, task)
       return response.data
     } catch (error) {
-      throw new Error('Não foi possível criar a tarefa.')
+      throw new Error(`Não foi possível criar a tarefa: ${error}`)
     }
   },
 
@@ -37,7 +37,7 @@ export const taskService = {
       const response = await api.put<Task>(`${BASE_SERVICE_URL}/${id}`, task)
       return response.data
     } catch (error) {
-      throw new Error('Não foi possível atualizar a tarefa.')
+      throw new Error(`Não foi possível atualizar a tarefa: ${error}`)
     }
   },
 
@@ -46,7 +46,7 @@ export const taskService = {
       const response = await api.delete(`${BASE_SERVICE_URL}/${id}`)
       return response.status === 204
     } catch (error) {
-      throw new Error('Não foi possível deletar a tarefa.')
+      throw new Error(`Não foi possível deletar a tarefa: ${error}`)
     }
   }
 }

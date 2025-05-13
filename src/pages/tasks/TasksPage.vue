@@ -52,7 +52,7 @@ import { useCreateEditDialog } from '../../composables/useCreateEditDialog';
 import { useTasks } from '../../composables/useTasks';
 import { usePagination } from '../../composables/usePagination';
 
-import { Header } from '../../types/headers';
+import { Header } from '../../types/Headers';
 import { Task, TaskPayload } from '../../types/task';
 
 const deleteDialogState = useDeleteDialog();

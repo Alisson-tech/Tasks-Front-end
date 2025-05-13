@@ -1,12 +1,14 @@
 import { ref, onMounted } from 'vue'
 import { taskService } from '../services/tasksServices'
+import { useSnackbar } from './useSnackBarFeedback'
+
 import type { Task, TaskPayload } from '../types/task'
 import type { PaginationParams, PaginationResult } from '../types/pagination'
 
 export function useTasks() {
   const tasks = ref<Task[]>([])
   const isLoading = ref(false)
-  const error = ref<string | null>(null)
+  const { openSuccess, openError } = useSnackbar()
 
   const fetchTasks = async (params: PaginationParams) => {
       try {
@@ -23,26 +25,27 @@ export function useTasks() {
   const createTask = async (taskData: Partial<TaskPayload>) => {
     try {
       await taskService.create(taskData)
-
+      openSuccess('Tarefa criada com sucesso')
     } catch (err) {
-      error.value = (err as Error).message
+      openError((err as Error).message)
     }
   }
 
   const updateTask = async (id: number, taskData: Partial<TaskPayload>) => {
     try {
       await taskService.update(id, taskData)
+      openSuccess('Tarefa atualizada com sucesso')
     } catch (err) {
-      error.value = (err as Error).message
+      openError((err as Error).message)
     }
   }
 
   const deleteTask = async (id: number) => {
     try {
-      const success = await taskService.delete(id)
-      return success
+      await taskService.delete(id)
+      openSuccess('Tarefa deletada com sucesso')
     } catch (err) {
-      error.value = (err as Error).message
+      openError((err as Error).message)
     }
   }
 
@@ -59,7 +62,6 @@ export function useTasks() {
   return {
     tasks,
     isLoading,
-    error,
     fetchTasks,
     createTask,
     updateTask,
