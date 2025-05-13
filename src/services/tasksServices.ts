@@ -41,6 +41,15 @@ export const taskService = {
     }
   },
 
+  async updateCompleted(id: number, completed: boolean) {
+    try {
+      const response = await api.put(`${BASE_SERVICE_URL}/${id}/completed`, { completed })
+      return response.data
+    } catch (error) {
+      throw new Error(`Erro ao atualizar o status da tarefa: ${error}`)
+    }
+  },
+
   async delete(id: number) {
     try {
       const response = await api.delete(`${BASE_SERVICE_URL}/${id}`)

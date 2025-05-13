@@ -3,7 +3,7 @@ import { taskService } from '../services/tasksServices'
 import { useSnackbar } from './useSnackBarFeedback'
 
 import type { Task, TaskPayload } from '../types/Task'
-import type { PaginationParams, PaginationResult } from '../types/pagination'
+import type { PaginationParams } from '../types/pagination'
 
 export function useTasks() {
   const tasks = ref<Task[]>([])
@@ -40,6 +40,15 @@ export function useTasks() {
     }
   }
 
+  const updateTaskCompleted = async (id: number, completed: boolean) => {
+    try {
+      await taskService.updateCompleted(id, completed)
+      openSuccess('Status da tarefa atualizado!')
+    } catch (error) {
+      openError((error as Error).message)
+    }
+  }
+
   const deleteTask = async (id: number) => {
     try {
       await taskService.delete(id)
@@ -65,6 +74,7 @@ export function useTasks() {
     fetchTasks,
     createTask,
     updateTask,
+    updateTaskCompleted,
     deleteTask,
     createTaskToPayload
   }

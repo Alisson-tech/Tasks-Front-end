@@ -22,6 +22,7 @@
                     v-model="item.completed"
                     class="d-flex justify-center"
                     color="success"
+                    @change = "updateTaskCompleted(item.id, item.completed)"
                   ></v-checkbox>
                 </template>
                 
@@ -91,5 +92,9 @@ async function handleEdit(item: TaskPayload) {
 async function handleDelete(id : number){
   await taskManager.deleteTask(id);
   await paginationManager.fetchData()
+}
+
+async function updateTaskCompleted(id:number, completed: boolean) {
+  await taskManager.updateTaskCompleted(id, completed)
 }
 </script>
