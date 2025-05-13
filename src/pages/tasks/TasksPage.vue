@@ -48,10 +48,10 @@ import { onMounted } from 'vue';
 import deleteDialog from '../../components/delete-dialog.vue';
 import createEditDialog from './components/create-edit-dialog.vue';
 
-import { useDeleteDialog } from '../../composables/useDeleteDialog';
-import { useCreateEditDialog } from '../../composables/useCreateEditDialog';
-import { useTasks } from '../../composables/useTasks';
-import { usePagination } from '../../composables/usePagination';
+import { useDeleteDialog } from '../../composables/shared/useDeleteDialog';
+import { useCreateEditDialog } from '../../composables/shared/useCreateEditDialog';
+import { useTasks } from '../../composables/tasks/useTasks';
+import { usePagination } from '../../composables/shared/usePagination';
 
 import { Header } from '../../types/Headers';
 import { Task, TaskPayload } from '../../types/Task';

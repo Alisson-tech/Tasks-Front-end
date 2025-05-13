@@ -1,9 +1,9 @@
 import { ref, onMounted } from 'vue'
-import { taskService } from '../services/tasksServices'
-import { useSnackbar } from './useSnackBarFeedback'
+import { taskService } from '../../services/tasksServices'
+import { useSnackbar } from '../shared/useSnackBarFeedback'
 
-import type { Task, TaskPayload } from '../types/Task'
-import type { PaginationParams } from '../types/pagination'
+import type { Task, TaskPayload } from '../../types/Task'
+import type { PaginationParams } from '../../types/pagination'
 
 export function useTasks() {
   const tasks = ref<Task[]>([])

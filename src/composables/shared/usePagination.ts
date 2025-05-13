@@ -1,5 +1,5 @@
 import { ref, watch, computed } from 'vue'
-import type { PaginationParams, PaginationResult } from '../types/pagination'
+import type { PaginationParams, PaginationResult } from '../../types/pagination'
 
 export function usePagination<T>(fetchFn: (params: PaginationParams) => Promise<PaginationResult<T>>) {
   const page = ref(1)

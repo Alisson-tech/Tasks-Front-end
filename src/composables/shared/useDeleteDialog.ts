@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { ItemDelete } from '../types/itemDelete'
+import { ItemDelete } from '../../types/itemDelete'
 
 export function useDeleteDialog() {
   const dialog = ref(false)

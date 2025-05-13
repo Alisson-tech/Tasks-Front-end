@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSnackbar } from '../composables/useSnackBarFeedback';
+import { useSnackbar } from '../composables/shared/useSnackBarFeedback';
 
 const { show, message, color } = useSnackbar()
 </script>
